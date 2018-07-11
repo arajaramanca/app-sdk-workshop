@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>data-store</title>
+
+    <script type="text/javascript" src="https://rally1.rallydev.com/apps/2.1/sdk.js"></script>
+
+    <script type="text/javascript">
+        Rally.onReady(function () {
+                Ext.define("CustomApp",{extend:"Rally.app.App",componentCls:"app",launch:function(){Ext.create("Rally.data.wsapi.Store",{model:"Defect",fetch:["Name","State"],autoLoad:!0,filters:[{property:"State",operator:"=",value:"Submitted"}],sorters:[{property:"Severity",direction:"DESC"}],context:{projectScopeDown:!1},listeners:{load:function(e,t){console.log(t)}}})}});
+
+            Rally.launchApp('CustomApp', {
+                name:"data-store",
+                parentRepos:"",
+                version:"0.1.1"
+            });
+
+        });
+    </script>
+
+
+    <style type="text/css">
+        
+    </style>
+</head>
+<body>
+</body>
+</html>

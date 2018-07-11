@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>custom-store</title>
+
+    <script type="text/javascript" src="/apps/2.1/sdk.js"></script>
+
+    <script type="text/javascript">
+        Rally.onReady(function () {
+                Ext.define('CustomApp', {
+    extend: 'Rally.app.App',
+    componentCls: 'app',
+    launch: function() {
+        //Write app code here
+
+        //API Docs: https://help.rallydev.com/apps/2.1/doc/
+        var store = Ext.create('Rally.data.custom.Store', {
+	        data: [
+	            {
+	                Name: 'Foo',
+	                City: 'Bar'
+	            },
+	            {
+	                Name: 'Foo One',
+	                City: 'Bar One'
+	            }            
+	        ]
+	    });
+       	debugger;
+
+	    console.log(store);
+
+    }
+});
+
+
+            Rally.launchApp('CustomApp', {
+                name:"custom-store",
+                parentRepos:"",
+                version:"0.1.1"
+            });
+
+        });
+    </script>
+
+
+
+    <style type="text/css">
+        .app {
+  /* Add app styles here */
+}
+
+    </style>
+</head>
+<body>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>data-store-2</title>
+
+    <script type="text/javascript" src="/apps/2.1/sdk.js"></script>
+
+    <script type="text/javascript">
+        Rally.onReady(function () {
+                Ext.define('CustomApp', {
+    extend: 'Rally.app.App',
+    componentCls: 'app',
+    
+    /**
+     * The app execution entry point
+     */
+    launch: function() {
+        this._loadStories();
+    },
+
+    /**
+     * Create a store to load unaccepted stories that
+     * have at least one defect associated to it.  The data should be loaded
+     * using the current project scoping.  Call _onStoriesLoaded on successful load.
+     */
+    _loadStories: function() {
+
+    },
+
+    /**
+     * Load the defects collection of the first story in the result store.
+     * Call _onDefectsLoaded when complete.
+     */
+    _onStoriesLoaded: function(store, records, success) {
+
+    },
+
+    /**
+     * Print the associated defects to the console in FormattedID: Name format.
+     */
+    _onDefectsLoaded: function(records, operation, success) {
+
+    }
+});
+
+
+            Rally.launchApp('CustomApp', {
+                name:"data-store-2",
+                parentRepos:"",
+                version:"0.1.1"
+            });
+
+        });
+    </script>
+
+
+
+    <style type="text/css">
+        .app {
+  /* Add app styles here */
+}
+
+    </style>
+</head>
+<body>
+</body>
+</html>
