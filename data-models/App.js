@@ -6,7 +6,7 @@ Ext.define('CustomApp', {
      * _getStoryModel should be called here
      */
     launch: function() {
-
+        this._getStoryModel();
     },
 
     /**
@@ -14,7 +14,13 @@ Ext.define('CustomApp', {
      * When complete, call _createStory
      */
     _getStoryModel: function() {
-        
+        console.log('Retrieving model...');
+
+        Rally.data.ModelFactory.getModel({
+            type: 'UserStory',
+            success: this._createStory,
+            scope: this
+        });        
     },
 
     /**
@@ -23,7 +29,15 @@ Ext.define('CustomApp', {
      * When complete, call _readStory
      */
     _createStory: function(model) {
-
+        console.log(model);
+        var newStory = Ext.create(model, {
+            Name: 'App SDK 2.1 is awesome!'
+        });
+        console.log(newStory);
+        newStory.save({
+            callback: this._readStory,
+            scope: this
+        });        
     },
 
     /**
@@ -32,7 +46,16 @@ Ext.define('CustomApp', {
      * When complete call _printStory
      */
     _readStory: function(story, operation) {
-        var model = story.self;
+        console.log('After saving', story);
+        if(operation.wasSuccessful()) {
+            var model = story.self;
+            console.log('Reading story...');
+            model.load(story.getId(), {
+                fetch: ['FormattedID'],
+                callback: this._printStory,
+                scope: this
+            });
+        }
     },
 
     /**
@@ -42,7 +65,10 @@ Ext.define('CustomApp', {
      * Call _updateStory when done.
      */
     _printStory: function(story, operation) {
-
+        if(operation.wasSuccessful()) {
+            console.log('FormattedID:', story.get('FormattedID'));
+            this._updateStory(story);
+        }
     },
 
     /**
@@ -51,7 +77,12 @@ Ext.define('CustomApp', {
      * When complete call _deleteStory
      */
     _updateStory: function(story) {
-
+        story.set('PlanEstimate', 5);
+        console.log('Updating story...');
+        story.save({
+            callback: this._deleteStory,
+            scope: this
+        });
     },
 
     /**
@@ -60,6 +91,18 @@ Ext.define('CustomApp', {
      * When complete console.log a success message.
      */
     _deleteStory: function(story, operation) {
+        if(operation.wasSuccessful()) {
+            console.log('Deleting story...');
+            story.destroy({
+                callback: this._complete,
+                scope: this
+            });
+        }
+    },
 
+    _complete: function(story, operation) {
+        if(operation.wasSuccessful()) {
+            console.log('Done!');
+        }
     }
 });
